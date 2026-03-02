@@ -1,0 +1,96 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         Role      @default(VIEWER)
+  posts        Post[]    @relation("PostsByAuthor")
+  media        Media[]   @relation("MediaByUser")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Post {
+  id          Int         @id @default(autoincrement())
+  title       String
+  slug        String      @unique
+  excerpt     String?
+  content     String      // can store Markdown/HTML
+  status      PostStatus  @default(DRAFT)
+  isFeatured  Boolean     @default(false)
+  viewCount   Int         @default(0)
+  publishedAt DateTime?
+  author      User        @relation("PostsByAuthor", fields: [authorId], references: [id])
+  authorId    Int
+  coverImage  Media?      @relation("PostCoverImage",fields: [coverImageId], references: [id])
+  coverImageId Int?
+  categories  PostCategory[]
+  tags        PostTag[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Media {
+  id           Int       @id @default(autoincrement())
+  url          String
+  alt          String?
+  mimeType     String
+  size         Int?
+  coverForPosts Post[] @relation("PostCoverImage")
+  uploadedBy   User      @relation("MediaByUser", fields: [uploadedById], references: [id])
+  uploadedById Int
+  createdAt    DateTime  @default(now())
+}
+
+model Category {
+  id    Int            @id @default(autoincrement())
+  name  String         @unique
+  slug  String         @unique
+  posts PostCategory[]
+}
+
+model PostCategory {
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  category  Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@id([postId, categoryId])
+}
+
+model Tag {
+  id    Int       @id @default(autoincrement())
+  name  String    @unique
+  slug  String    @unique
+  posts PostTag[]
+}
+
+model PostTag {
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
+
+  @@id([postId, tagId])
+}
