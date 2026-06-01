@@ -1,0 +1,46 @@
+site_name: My NextJS App Documentation
+site_description: User manual and technical documentation for My NextJS App.
+site_url: https://someshwarsutar.github.io/my-nextjs-app/
+repo_url: https://github.com/SomeshwarSutar/my-nextjs-app.git
+repo_name: SomeshwarSutar/my-nextjs-app
+edit_uri: edit/main/docs/
+dev_addr: 127.0.0.1:8001
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+
+  - User Manual:
+      - Getting Started: user-manual/getting-started.md
+      - Configuration: user-manual/configuration.md
+      - API Reference: user-manual/api-usage.md
+      - Troubleshooting: user-manual/troubleshooting.md
+
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Project Structure: architecture/project-structure.md
+      - Database Schema: architecture/database-schema.md
+
+  - Guides:
+      - Authentication: guides/authentication.md
+      - Admin Panel: guides/admin-panel.md
+      - Deployment: guides/deployment.md
+
+  - Contributing: contributing.md
