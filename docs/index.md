@@ -6,6 +6,12 @@ A full-stack blog platform built with **Next.js 16**, **Prisma**, **MariaDB**, *
 
 My Blog App is a content-focused web application that allows authors to publish articles and readers to discover them. It features a clean public-facing blog, a credential-based authentication system, and an admin dashboard for managing content and users.
 
+## Demo Video
+
+<video width="600" controls>
+  <source src="assets/videos/Step1 - Atos Polaris Login.mp4" type="video/mp4">
+</video>
+
 ## Key Features
 
 | Feature | Description |
